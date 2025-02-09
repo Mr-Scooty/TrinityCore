@@ -639,8 +639,6 @@ enum GaspingForBreath
 
 class spell_gilneas_rescue_drowning_watchman : public SpellScript
 {
-    PrepareSpellScript(spell_gilneas_rescue_drowning_watchman);
-
     void HandleDummy(SpellEffIndex /*effIndex*/)
     {
         if (Player* player = GetCaster()->ToPlayer())
@@ -712,9 +710,9 @@ public:
         if (Vehicle* vehicle = player->GetVehicleKit())
             if (Unit* passenger = vehicle->GetPassenger(SEAT_0))
             {
-                player->CastSpell(passenger, SPELL_DROWNING_MILITA_DUMMY);
+                player->CastSpell(passenger, SPELL_DROWNING_MILITIA_DUMMY);
                 player->CastSpell(passenger, SPELL_DROWNING_VEHICLE_EXIT_DUMMY);
-                player->CastSpell(nullptr, SPELL_SAVE_DROWNING_MILITA_EFFECT);
+                player->CastSpell(nullptr, SPELL_SAVE_DROWNING_MILITIA_EFFECT);
             }
 
         return true;
