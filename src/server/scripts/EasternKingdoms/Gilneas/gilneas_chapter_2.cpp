@@ -629,13 +629,35 @@ class spell_gilneas_worgen_intro_completion : public SpellScript
 
 enum GaspingForBreath
 {
+    NPC_DROWNING_WATCHMAN               = 36449,
     NPC_DROWNING_WATCHMAN_CREDIT        = 36450,
-
     SPELL_RESCUE_DROWNING_WATCHMAN      = 68735,
     SPELL_SAVE_DROWNING_MILITA_EFFECT   = 68737,
     SPELL_DROWNING_MILITA_DUMMY         = 68739,
     SPELL_DROWNING_VEHICLE_EXIT_DUMMY   = 68741
 
+};
+
+class spell_gilneas_rescue_drowning_watchman : public SpellScript
+{
+    PrepareSpellScript(spell_gilneas_rescue_drowning_watchman);
+
+    void HandleDummy(SpellEffIndex /*effIndex*/) override
+    {
+        if (Player* player = GetCaster()->ToPlayer())
+        {
+            if (Unit* watchman = GetHitUnit())
+            {
+                if (watchman->GetEntry() == NPC_DROWNING_WATCHMAN)
+                    watchman->EnterVehicle(player, 0);
+            }
+        }
+    }
+
+    void Register() override
+    {
+        OnEffectHitTarget.Register(&spell_gilneas_rescue_drowning_watchman::HandleDummy, EFFECT_1, SPELL_EFFECT_DUMMY);
+    }
 };
 
 // 68737 Save Drowning Militia Effect
@@ -714,5 +736,6 @@ void AddSC_gilneas_chapter_2()
     RegisterSpellScript(spell_gilneas_worgen_intro_completion);
     RegisterSpellScript(spell_gilneas_save_drowning_milita_effect);
     RegisterSpellScript(spell_gilneas_drowning_vehicle_exit_dummy);
+    RegisterSpellScript(spell_gilneas_rescue_drowning_watchman);
     new at_gasping_for_breath();
 }
