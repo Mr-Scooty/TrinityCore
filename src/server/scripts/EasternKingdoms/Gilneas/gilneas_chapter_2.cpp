@@ -641,7 +641,7 @@ class spell_gilneas_rescue_drowning_watchman : public SpellScript
 {
     void HandleDummy(SpellEffIndex /*effIndex*/)
     {
-        sLog->outString("Drowning Watchman Clicked");
+        TC_LOG_DEBUG("scripts", "Drowning Watchman Clicked");
         if (Player* player = GetCaster()->ToPlayer())
         {
             if (Unit* watchman = GetHitUnit())
