@@ -637,28 +637,44 @@ enum GaspingForBreath
     SPELL_DROWNING_VEHICLE_EXIT_DUMMY= 68741
 };
 
+struct npc_drowning_watchman : public ScriptedAI
+{
+    npc_drowning_watchman(Creature* creature) : ScriptedAI(creature) { }
+
+    void Reset() override
+    {
+        me->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_SPELLCLICK);
+        me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_APPEAR_DEAD);
+    }
+};
+
 class spell_gilneas_rescue_drowning_watchman : public SpellScript
 {
+    bool Validate(SpellInfo const* /*spellInfo*/) override
+    {
+        return ValidateSpellInfo({ SPELL_RESCUE_DROWNING_WATCHMAN });
+    }
+
     void HandleDummy(SpellEffIndex /*effIndex*/)
     {
-        TC_LOG_DEBUG("scripts", "Drowning Watchman Clicked");
         if (Player* player = GetCaster()->ToPlayer())
         {
             if (Unit* watchman = GetHitUnit())
             {
                 if (watchman->GetEntry() == NPC_DROWNING_WATCHMAN)
+                {
+                    watchman->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_SPELLCLICK);
                     watchman->EnterVehicle(player, 0);
+                }
             }
         }
     }
 
     void Register() override
     {
-        // Bind HandleDummy to effect 1 of spell (SPELL_EFFECT_DUMMY)
         OnEffectHitTarget.Register(&spell_gilneas_rescue_drowning_watchman::HandleDummy, EFFECT_1, SPELL_EFFECT_DUMMY);
     }
 };
-
 
 // 68737 Save Drowning Militia Effect
 class spell_gilneas_save_drowning_milita_effect : public SpellScript
@@ -736,6 +752,7 @@ void AddSC_gilneas_chapter_2()
     RegisterSpellScript(spell_gilneas_worgen_intro_completion);
     RegisterSpellScript(spell_gilneas_save_drowning_milita_effect);
     RegisterSpellScript(spell_gilneas_drowning_vehicle_exit_dummy);
+    RegisterCreatureAI(npc_drowning_watchman);
     RegisterSpellScript(spell_gilneas_rescue_drowning_watchman);
     new at_gasping_for_breath();
 }
