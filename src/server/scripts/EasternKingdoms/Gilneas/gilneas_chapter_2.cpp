@@ -629,8 +629,8 @@ class spell_gilneas_worgen_intro_completion : public SpellScript
 
 enum GaspingForBreath
 {
-    NPC_DROWNING_WATCHMAN        = 36449,  // Drowning Watchman NPC (use 36440 if aligning with official data)
-    NPC_DROWNING_WATCHMAN_CREDIT = 36450,  // Quest credit NPC for "Drowning Watchman rescued"
+    NPC_DROWNING_WATCHMAN        = 36440,
+    NPC_DROWNING_WATCHMAN_CREDIT = 36450,  
     SPELL_RESCUE_DROWNING_WATCHMAN = 68735,
     SPELL_SAVE_DROWNING_MILITIA_EFFECT = 68737,
     SPELL_DROWNING_MILITIA_DUMMY     = 68739,
