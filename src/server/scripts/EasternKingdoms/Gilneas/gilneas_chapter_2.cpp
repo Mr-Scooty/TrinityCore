@@ -644,7 +644,7 @@ struct npc_drowning_watchman : public ScriptedAI
     void Reset() override
     {
         me->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_SPELLCLICK);
-        me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_APPEAR_DEAD);
+        me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_UNK_29);
     }
 };
 
