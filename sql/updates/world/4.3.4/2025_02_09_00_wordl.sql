@@ -1,7 +1,10 @@
 -- Make Drowning Watchman NPC spell-clickable for the quest
 UPDATE creature_template SET npcflag = npcflag | 0x100 WHERE entry = 36440;
+
+-- Remove existing spellclick spell if it exists
+DELETE FROM npc_spellclick_spells WHERE npc_entry = 36440 AND spell_id = 68735;
 INSERT INTO npc_spellclick_spells (npc_entry, spell_id, cast_flags, user_type) 
- VALUES (36440, 68735, 1, 0, 14395);
+ VALUES (36440, 68735, 1, 0);
 
 -- SmartAI for NPC: on spell 68735 hit, enter vehicle (player)
 INSERT INTO smart_scripts (entryorguid, source_type, id, link, event_type, event_phase_mask, event_chance, event_flags, event_param1, event_param2, event_param3, event_param4, action_type, action_param1, action_param2, action_param3, action_param4, action_param5, action_param6, target_type, target_param1, target_param2, target_param3, target_x, target_y, target_z, target_o, comment) 
